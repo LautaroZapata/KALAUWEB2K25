@@ -1,4 +1,3 @@
-
 .video-container {
     position: absolute;
     width: 100%;
@@ -7,7 +6,7 @@
     z-index: -10;
 }
 
-video {
+.video-main {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -30,20 +29,58 @@ video {
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
 }
 
-
-.font-regular{
+.font-regular {
     font-family: "DM Serif Text", serif;
     font-weight: 400;
     font-style: normal;
-  }
-  
-  .font-italic {
+}
+
+.font-italic {
     font-family: "DM Serif Text", serif;
     font-weight: 400;
     font-style: italic;
-  }
-  
+}
 
-#videos {
-    position: relative;
+/* Ajuste de videos en el contenedor */
+#videos video {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 575px) {
+    #videos video {
+        width: 256px;
+        height: 144px;
+    }
+}
+
+
+/* Para pantallas medianas y mayores, como iPads (de 576px a 768px) */
+@media (min-width: 576px) and (max-width: 992px) {
+    #videos {
+        display: flex;
+        flex-wrap: wrap;  /* Los videos se organizan en múltiples filas si es necesario */
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    #videos video {
+        width: 256px; /* Ancho fijo para los videos */
+        height: 144px; /* Altura correspondiente para mantener la relación 16:9 */
+    }
+}
+
+@media (min-width: 992px) {
+    #videos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    #videos video {
+        width: 854px;  /* Ancho para 480p */
+        height: 480px; /* Altura para 480p */
+    }
 }

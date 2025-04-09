@@ -1,42 +1,80 @@
-let videoLinks = [
-    "https://www.youtube.com/watch?v=bbU53mhbg7Y&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt",
-    "https://www.youtube.com/watch?v=aF1aHWXQhpg&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=2",
-    "https://www.youtube.com/watch?v=9HVR8y0hjZE&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=3",
-    "https://www.youtube.com/watch?v=3QHWIQQ1Xfg&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=4",
-    "https://www.youtube.com/watch?v=_ZaG8HEmmUE&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=5",
-    "https://www.youtube.com/watch?v=jqU9wi861ok&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=6",
-    "https://www.youtube.com/watch?v=JXD6fFKaEdE&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=7",
-    "https://www.youtube.com/watch?v=jW3bHcmYGg4&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=8",
-    "https://www.youtube.com/watch?v=ZeB9BFDQd_s&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=9",
-    "https://www.youtube.com/watch?v=AGV1K8V6KE8&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=10",
-    "https://www.youtube.com/watch?v=tZ7NvdbS-Us&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=11",
-    "https://www.youtube.com/watch?v=VpTMxlxcvNI&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=12",
-    "https://www.youtube.com/watch?v=y61oOx2IRE4&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=13",
-    "https://www.youtube.com/watch?v=0n7iJBwCTn4&list=PLmEAVjTVOYZeQY8Go9B5aY3iRhWiwlZTt&index=14",
-    
-];
-
-
-let videoIds = [];
-
-
-videoLinks.forEach(link => {
-    let videoId = link.match(/v=([^&]+)/)[1]; // Extrae el ID del video
-    videoIds.push(videoId); // Almacena el ID en el array
-});
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    let div = document.querySelector('#videos');
-    for (let i = 0; i< videoIds.length; i++) {
-        const iframe = document.createElement("iframe");
-        iframe.width = "720";
-        iframe.height = "405";
-        iframe.src = `https://www.youtube.com/embed/${videoIds[i]}`;
-        iframe.allowFullscreen = true;
-        iframe.className = "container";
-        div.appendChild(iframe);
+    const div = document.querySelector('#videos');
 
-    }
+    const videoFiles = [
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+        {
+            url: "/kalaufx30.mp4",
+            title: "Bachata Uruguay",
+            desc: "Este EP es un gran proyecto que trabajamos junto a Edi Vega y Sxsa Visuals",
+        },
+    ];
 
+    videoFiles.forEach(file => {
+        const video = document.createElement("video");
+        video.src = file.url;
+        video.className = "m-3";
+        video.muted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.style.cursor = "pointer";
+        video.title = file.title;
+
+        video.addEventListener("click", () => {
+            const modalTitle = document.getElementById("videoModalLabel");
+            const modalVideo = document.getElementById("modalVideo");
+            const modalSource = modalVideo.querySelector("source");
+            const h6Desc = document.getElementById("h6Desc");
+            h6Desc.textContent = file.desc || "No hay descripción disponible.";
+            modalTitle.textContent = file.title;
+            modalSource.src = file.url;
+            modalVideo.load();
+
+            const modal = new bootstrap.Modal(document.getElementById("videoModal"));
+            modal.show();
+        });
+
+        div.appendChild(video);
+    });
+
+    // Detener video cuando se cierra el modal
+    document.getElementById("videoModal").addEventListener("hidden.bs.modal", () => {
+        const modalVideo = document.getElementById("modalVideo");
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+    });
 });
